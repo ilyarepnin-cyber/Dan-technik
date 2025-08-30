@@ -328,6 +328,25 @@
     </div>
   </div>
 
+  <!-- Липкие кнопки в углу -->
+  <div id="sticky-actions" class="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3">
+    <!-- Кнопки быстрых чатов (только десктоп) -->
+    <div class="hidden md:flex flex-col items-end gap-3">
+      <a href="https://wa.me/79918623459" target="_blank" class="hover-lift flex items-center justify-center w-12 h-12 bg-white card p-0 rounded-full shadow-lg" aria-label="Написать в WhatsApp">
+        <img src="https://i.ibb.co/k4g5Xf0/wats-transformed.png" alt="WhatsApp" class="w-6 h-6">
+      </a>
+      <a href="https://t.me/dan_technik" target="_blank" class="hover-lift flex items-center justify-center w-12 h-12 bg-white card p-0 rounded-full shadow-lg" aria-label="Написать в Telegram">
+        <img src="https://i.ibb.co/c3bQcFY/tg-transformed.png" alt="Telegram" class="w-6 h-6">
+      </a>
+    </div>
+    <!-- Липкая кнопка "Запросить прайс" (только мобильные) -->
+    <div id="sticky-cta-mobile" class="md:hidden">
+      <button id="openModalSticky" class="hover-lift bg-brandRed text-white px-4 py-3 rounded-xl font-semibold shadow-lg">
+        Запросить прайс
+      </button>
+    </div>
+  </div>
+
   <!-- JS -->
   <script>
     // Год
@@ -354,7 +373,7 @@
 
     // Модалка
     const modal = document.getElementById('leadModal');
-    const openBtns = [ 'openModalHero', 'openModalTop', 'openModalTopSm', 'openModalContact' ]
+    const openBtns = [ 'openModalHero', 'openModalTop', 'openModalTopSm', 'openModalContact', 'openModalSticky' ]
       .map(id => document.getElementById(id)).filter(Boolean);
     const closeBtn = document.getElementById('closeModal');
     function openModal() { modal.classList.remove('modal-hidden'); setTimeout(() => modal.querySelector('input,select,textarea,button')?.focus(), 0); track('modal_open', { where: 'cta' }); }
