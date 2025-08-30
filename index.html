@@ -28,6 +28,7 @@
     }
   </script>
 
+  <script src="https://api-maps.yandex.ru/2.1/?apikey=f48d85f1-1e4f-47b4-ada7-23da362e655c&lang=ru_RU" type="text/javascript"></script>
   <style>
     html { scroll-behavior: smooth; }
     section { scroll-margin-top: 90px; }
@@ -257,7 +258,22 @@
           <p class="text-sm text-slate-600">Паспорт качества, сертификаты, ТТН, счёт-фактура.</p>
         </div>
       </div>
-      <img src="/map-placeholder.jpg" alt="Карта зон доставки — Москва и МО" class="mt-6 w-full rounded-2xl shadow" />
+      <div id="map" class="mt-6 w-full h-96 rounded-2xl shadow"></div>
+      <div class="mt-6 card p-5">
+        <h3 class="font-semibold">Расчет стоимости доставки</h3>
+        <label class="text-sm block mt-3">Зона доставки
+          <input type="range" id="deliveryZoneSlider" min="0" max="2" value="0" step="1" class="w-full mt-1" />
+          <span id="deliveryZoneValue" class="block text-center mt-1">Зона 1 (до 30 км)</span>
+        </label>
+        <label class="text-sm block mt-3">Объём щебня (т)
+          <input type="range" id="deliveryTonsSlider" min="1" max="200" value="1" step="1" class="w-full mt-1" />
+          <span id="deliveryTonsValue" class="block text-center mt-1">1 т</span>
+        </label>
+        <div class="mt-4 text-sm">
+          <div class="flex justify-between"><dt>Ориентировочная стоимость</dt><dd id="deliveryCost">0 ₽</dd></div>
+          <div class="flex justify-between"><dt>Ориентировочное время</dt><dd id="deliveryTime">0 ч</dd></div>
+        </div>
+      </div>
     </section>
 
     <!-- ДОКУМЕНТЫ -->
@@ -433,6 +449,131 @@
         mobileMenu.classList.add('hidden');
       });
     });
+
+    // Интерактивная карта доставки
+    ymaps.ready(initMap);
+
+    function initMap() {
+      const warehouseCoords = [55.916667, 37.983333]; // Координаты Щёлково
+      const map = new ymaps.Map('map', {
+        center: warehouseCoords,
+        zoom: 10,
+        controls: ['zoomControl', 'fullscreenControl'],
+        behaviors: ['default', 'scrollZoom'] // Включаем по умолчанию, чтобы потом отключить
+      });
+      map.behaviors.disable('scrollZoom'); // Отключаем масштабирование колесиком мыши
+
+      const warehousePlacemark = new ymaps.Placemark(warehouseCoords, {
+        balloonContent: 'Склад Дан - Техник'
+      }, {
+        preset: 'islands#redDotIcon'
+      });
+      map.geoObjects.add(warehousePlacemark);
+
+      const deliveryZoneSlider = document.getElementById('deliveryZoneSlider');
+      const deliveryZoneValue = document.getElementById('deliveryZoneValue');
+      const deliveryCost = document.getElementById('deliveryCost');
+      const deliveryTime = document.getElementById('deliveryTime');
+      const cFraction = document.getElementById('cFraction');
+      const deliveryTonsSlider = document.getElementById('deliveryTonsSlider');
+      const deliveryTonsValue = document.getElementById('deliveryTonsValue');
+
+      const deliveryZones = [
+        { name: 'Зона 1 (до 30 км)', minDistance: 0, maxDistance: 30, color: '#A5D6A7', zoneKKey: 'MO1' }, // Light Green
+        { name: 'Зона 2 (30-60 км)', minDistance: 30, maxDistance: 60, color: '#FFF59D', zoneKKey: 'MO2' }, // Light Yellow
+        { name: 'Зона 3 (60-90 км)', minDistance: 60, maxDistance: 90, color: '#FFB74D', zoneKKey: 'MO3' }, // Orange
+      ];
+
+      // Массив для хранения объектов полигонов на карте
+      const mapPolygons = [];
+
+      // Добавляем стили для ползунка слайдера
+      const style = document.createElement('style');
+      style.id = 'deliveryZoneSliderStyle';
+      document.head.appendChild(style);
+
+      // Вспомогательная функция для генерации координат круга
+      function getCircleCoordinates(center, radius, points = 60) {
+        const coords = [];
+        for (let i = 0; i < points; i++) {
+          const angle = (i / points) * 2 * Math.PI;
+          const lat = center[0] + (radius / 111300) * Math.cos(angle); // Приближенно 1 градус широты = 111.3 км
+          const lon = center[1] + (radius / (111300 * Math.cos(center[0] * Math.PI / 180))) * Math.sin(angle);
+          coords.push([lat, lon]);
+        }
+        return coords;
+      }
+
+      // Добавляем полигоны-кольца на карту (выполняется один раз при инициализации карты)
+      deliveryZones.forEach((zone, index) => {
+        const outerRing = getCircleCoordinates(warehouseCoords, zone.maxDistance * 1000);
+        let innerRing = [];
+        if (zone.minDistance > 0) {
+          innerRing = getCircleCoordinates(warehouseCoords, zone.minDistance * 1000).reverse(); // Обратный порядок для внутреннего контура
+        }
+
+        const polygon = new ymaps.Polygon([outerRing, innerRing].filter(r => r.length > 0), {
+          balloonContent: zone.name
+        }, {
+          fillColor: zone.color + '4D', // Прозрачность 30%
+          strokeColor: zone.color,
+          strokeOpacity: 0.8,
+          strokeWidth: 2
+        });
+        map.geoObjects.add(polygon);
+        mapPolygons.push(polygon); // Сохраняем ссылку на полигон
+      });
+
+      function updateDeliveryInfo() {
+        const zoneIndex = parseInt(deliveryZoneSlider.value);
+        const currentZone = deliveryZones[zoneIndex];
+
+        deliveryZoneValue.textContent = currentZone.name;
+        
+        // Обновляем цвет слайдера
+        style.textContent = `
+          #deliveryZoneSlider::-webkit-slider-thumb { background: ${currentZone.color}; }
+          #deliveryZoneSlider::-moz-range-thumb { background: ${currentZone.color}; }
+          #deliveryZoneSlider::-ms-thumb { background: ${currentZone.color}; }
+        `;
+
+        // Динамическое изменение прозрачности зон на карте
+        mapPolygons.forEach((polygon, index) => {
+          if (index === zoneIndex) {
+            polygon.options.set('fillColor', currentZone.color + '80'); // Прозрачность 50% для активной зоны
+          } else {
+            polygon.options.set('fillColor', deliveryZones[index].color + '4D'); // Прозрачность 30% для неактивных зон
+          }
+        });
+
+        const tons = parseInt(deliveryTonsSlider.value);
+        deliveryTonsValue.textContent = `${tons} т`;
+
+        // Расчет стоимости доставки
+        const selectedFraction = cFraction.value;
+        const basePricePerTon = base[selectedFraction] || 0;
+        const zoneMultiplier = zoneK[currentZone.zoneKKey] || 1;
+
+        let cost = basePricePerTon * tons * zoneMultiplier;
+
+        // Применяем скидки за объем из калькулятора
+        if (tons > 100) cost *= 0.94; else if (tons > 50) cost *= 0.97;
+
+        deliveryCost.textContent = isFinite(cost) && cost > 0
+          ? new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 }).format(cost)
+          : 'Укажите объём';
+
+        // Расчет времени доставки (простая эвристика на основе максимального расстояния зоны)
+        const time = Math.ceil(currentZone.maxDistance / 30) + 1;
+        deliveryTime.textContent = `${time} ч`;
+      }
+
+      deliveryZoneSlider.addEventListener('input', updateDeliveryInfo);
+      deliveryTonsSlider.addEventListener('input', updateDeliveryInfo);
+      cFraction.addEventListener('change', updateDeliveryInfo);
+
+      updateDeliveryInfo();
+    }
   </script>
 </body>
 </html>
