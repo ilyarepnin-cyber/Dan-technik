@@ -34,7 +34,7 @@
     section { scroll-margin-top: 90px; }
 
     /* Белые плашки */
-    .card { background:#fff; box-shadow: 0 10px 25px rgba(2,6,23,.08); border-radius: 1rem; }
+    .card { background:rgba(255,255,255,0.5); box-shadow: 0 10px 25px rgba(2,6,23,.08); border-radius: 1rem; }
     .wrap { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
     .focus-ring:focus { outline: 3px solid #dc2626; outline-offset: 2px }
 
@@ -92,12 +92,9 @@
   <a href="#contact" class="sr-only focus:not-sr-only focus-ring absolute m-2 px-3 py-1 bg-white rounded">К контактам</a>
 
   <!-- ШАПКА -->
-  <header class="sticky top-0 z-50 border-b bg-white/90 backdrop-blur">
+  <header class="sticky top-0 z-50 bg-white/30 backdrop-blur">
     <div class="wrap py-3 flex items-center gap-6">
-      <div class="flex items-center gap-3">
-        <img src="/logo.svg" alt="Логотип Дан - Техник" class="h-8 w-8" />
-        <span class="font-semibold">Дан - Техник</span>
-      </div>
+      <!-- Логотип и название компании удалены -->
       <nav class="ml-auto hidden md:flex items-center gap-6 text-sm">
         <a href="#products" class="hover:text-brandRed">Ассортимент</a>
         <a href="#calc" class="hover:text-brandRed">Калькулятор</a>
