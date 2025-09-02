@@ -28,6 +28,36 @@
     }
   </script>
 
+  <!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Дан - Техник — вторичный щебень в Москве и МО</title>
+  <meta name="description" content="Дан - Техник: вторичный щебень из переработанного бетона. Фракции 0–5, 5–20, 20–40, 40–70. Доставка по Москве и Московской области." />
+  <meta property="og:title" content="Дан - Техник — вторичный щебень в Москве и МО" />
+  <meta property="og:description" content="Фракции 0–5, 5–20, 20–40, 40–70. Доставка по Москве и МО. Паспорт качества и документы." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ru_RU" />
+  <link rel="icon" href="/favicon.ico" />
+
+  <!-- Tailwind через CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandRed: '#dc2626',
+            brandYellow: '#f59e0b',
+            ink: '#111827',
+            fog: '#f3f4f6'
+          }
+        }
+      }
+    }
+  </script>
+
   <script src="https://api-maps.yandex.ru/2.1/?apikey=f48d85f1-1e4f-47b4-ada7-23da362e655c&lang=ru_RU" type="text/javascript"></script>
   <style>
     html { scroll-behavior: smooth; }
@@ -76,7 +106,8 @@
     .modal-hidden { display: none; }
     .modal-backdrop { background: rgba(0,0,0,.45); }
   
-  </style>
+
+</style>
 </head>
 <body class="text-ink">
   <!-- Фон: размытая фотография щебня (адаптивный <picture>) + параллакс -->
@@ -155,8 +186,10 @@
       <p class="mt-2 text-slate-600">Ориентировочные параметры. Точные данные — в паспорте партии.</p>
 
       <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
         <article class="card p-5 hover-lift">
-          <img src="img/Фракция 0-5 мм.jpg" alt="Фракция 0-5 мм" class="mb-4 rounded-lg w-full h-32 object-cover" />
+
+          <img src="img/Фракция 0-5 мм.jpeg" alt="Фракция 0-5 мм" class="mb-4 rounded-lg w-full h-32 object-cover" />
           <h3 class="font-semibold">0–5 мм</h3>
           <p class="text-sm text-slate-600 mt-1">Отсев/песок вторичный. Подготовка оснований, выравнивающие слои.</p>
           <dl class="mt-3 text-sm">
@@ -166,7 +199,7 @@
         </article>
 
         <article class="card p-5 hover-lift">
-          <img src="img/Фракция 5-20 мм.jpg" alt="Фракция 5-20 мм" class="mb-4 rounded-lg w-full h-32 object-cover" />
+          <img src="img/Фракция 5-20 мм.jpeg" alt="Фракция 5-20 мм" class="mb-4 rounded-lg w-full h-32 object-cover" />
           <h3 class="font-semibold">5–20 мм</h3>
           <p class="text-sm text-slate-600 mt-1">Благоустройство, временные дороги, дренажи.</p>
           <dl class="mt-3 text-sm">
@@ -176,7 +209,7 @@
         </article>
 
         <article class="card p-5 hover-lift">
-          <img src="img/Фракция 20-40 мм.jpg" alt="Фракция 20-40 мм" class="mb-4 rounded-lg w-full h-32 object-cover" />
+          <img src="img/Фракция 20-40 мм.jpeg" alt="Фракция 20-40 мм" class="mb-4 rounded-lg w-full h-32 object-cover" />
           <h3 class="font-semibold">20–40 мм</h3>
           <p class="text-sm text-slate-600 mt-1">Основания под площадки, засыпка траншей.</p>
           <dl class="mt-3 text-sm">
@@ -186,7 +219,556 @@
         </article>
 
         <article class="card p-5 hover-lift">
-          <img src="img/Фракция 40-70 мм.jpg" alt="Фракция 40-70 мм" class="mb-4 rounded-lg w-full h-32 object-cover" />
+          <img src="img/Фракция 40-70 мм.jpeg" alt="Фракция 40-70 мм" class="mb-4 rounded-lg w-full h-32 object-cover" />
+          <h3 class="font-semibold">40–70 мм</h3>
+          <p class="text-sm text-slate-600 mt-1">Крупные подушки, технологические площадки.</p>
+          <dl class="mt-3 text-sm">
+            <div class="flex justify-between"><dt>Плотность</dt><dd>≈1,3–1,5 т/м³</dd></div>
+            <div class="flex justify-between"><dt>Поставка</dt><dd>навал / биг-бэг</dd>
+          </dl>
+        </article>
+      </div>
+      <p class="text-xs text-slate-500 mt-3">* Значения зависят от партии; точные — в паспорте качества.</p>
+    </section>
+
+    <!-- КАЛЬКУЛЯТОР (₽, Москва и МО) -->
+    <section id="calc" class="card p-6 md:p-10 reveal">
+      <h2 class="text-2xl md:text-3xl font-bold">Калькулятор стоимости (₽)</h2>
+      <div class="mt-6 grid md:grid-cols-2 gap-8">
+        <form id="calcForm" class="card p-6">
+          <label class="text-sm">Фракция
+            <select id="cFraction" class="mt-1 w-full border rounded-lg px-3 py-2 focus-ring">
+              <option value="0-5">0–5 мм</option>
+              <option value="5-20">5–20 мм</option>
+              <option value="20-40">20–40 мм</option>
+              <option value="40-70">40–70 мм</option>
+            </select>
+          </label>
+          <label class="text-sm block mt-4">Объём (т)
+            <input id="cTons" type="number" min="1" step="0.1" placeholder="30" class="mt-1 w-full border rounded-lg px-3 py-2 focus-ring"/>
+          </label>
+          <label class="text-sm block mt-4">Зона доставки
+            <select id="cZone" class="mt-1 w-full border rounded-lg px-3 py-2 focus-ring">
+              <option value="MSK">Москва (МКАД)</option>
+              <option value="MO1">МО до 30 км от МКАД</option>
+              <option value="MO2">МО 30–60 км от МКАД</option>
+              <option value="MO3">МО 60–90 км от МКАД</option>
+            </select>
+          </label>
+          <button class="mt-5 hover-lift bg-brandRed text-white px-4 py-3 rounded-xl font-semibold">Рассчитать</button>
+          <p id="calcOut" class="mt-4 text-lg font-semibold"></p>
+          <p class="text-xs text-slate-500 mt-2">Итог ориентировочный; коммерческое предложение — после уточнения адреса/объёма.</p>
+        </form>
+        <div class="card p-6 text-sm text-slate-600">
+          <p class="mb-2">Модель расчёта (пример для запуска):</p>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>База ₽/т по фракции: 0–5 = ₽950, 5–20 = ₽1 200, 20–40 = ₽1 100, 40–70 = ₽900.</li>
+            <li>Множитель зоны: Москва ×1.00, МО до 30 км ×1.08, 30–60 км ×1.15, 60–90 км ×1.25.</li>
+            <li>Скидки объёма: >50 т = −3%, >100 т = −6%.</li>
+          </ul>
+          <p class="mt-3">Регион доставки: <strong>Москва и Московская область</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЛОГИСТИКА -->
+    <section id="logistics" class="card p-6 md:p-10 reveal">
+      <h2 class="text-2xl md:text-3xl font-bold">Доставка и самовывоз — Москва и Московская область</h2>
+      <div class="mt-6 grid md:grid-cols-3 gap-6">
+        <div class="card p-5 hover-lift">
+          <h3 class="font-semibold">Зоны и слоты</h3>
+          <p class="text-sm text-slate-600">Отгрузка со склада <span id="addrInline">М.О.  г. Щёлково, ул. Заречная , стр.139</span>. Согласуем слоты, при необходимости — ночные окна.</p>
+        </div>
+        <div class="card p-5 hover-lift">
+          <h3 class="font-semibold">Свой автопарк</h3>
+          <p class="text-sm text-slate-600">Самосвалы (тип/кузов). Самовывоз — по записи.</p>
+        </div>
+        <div class="card p-5 hover-lift">
+          <h3 class="font-semibold">Документы</h3>
+          <p class="text-sm text-slate-600">Паспорт качества, сертификаты, ТТН, счёт-фактура.</p>
+        </div>
+      </div>
+      <div id="map" class="mt-6 w-full h-96 rounded-2xl shadow"></div>
+      <div class="mt-6 card p-5">
+        <h3 class="font-semibold">Расчет стоимости доставки</h3>
+        <label class="text-sm block mt-3">Зона доставки
+          <input type="range" id="deliveryZoneSlider" min="0" max="2" value="0" step="1" class="w-full mt-1" />
+          <span id="deliveryZoneValue" class="block text-center mt-1">Зона 1 (до 30 км)</span>
+        </label>
+        <label class="text-sm block mt-3">Объём щебня (т)
+          <input type="range" id="deliveryTonsSlider" min="1" max="200" value="1" step="1" class="w-full mt-1" />
+          <span id="deliveryTonsValue" class="block text-center mt-1">1 т</span>
+        </label>
+        <div class="mt-4 text-sm">
+          <div class="flex justify-between"><dt>Ориентировочная стоимость</dt><dd id="deliveryCost">0 ₽</dd></div>
+          <div class="flex justify-between"><dt>Ориентировочное время</dt><dd id="deliveryTime">0 ч</dd></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ДОКУМЕНТЫ -->
+    <section id="docs" class="card p-6 md:p-10 reveal">
+      <h2 class="text-2xl md:text-3xl font-bold">Документы и сертификаты</h2>
+      <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-sm">
+        <a href="/docs/passport-sample.pdf" class="card p-4 hover-lift hover:ring-2 ring-brandRed" download>Паспорт качества — образец (PDF)</a>
+        <a href="/docs/ce-en13242.pdf" class="card p-4 hover-lift hover:ring-2 ring-brandRed" download>CE / EN 13242 (PDF)</a>
+        <a href="/docs/[локальный_стандарт].pdf" class="card p-4 hover-lift hover:ring-2 ring-brandRed" download>[Локальный стандарт] (PDF)</a>
+        <a href="/docs/policy.pdf" class="card p-4 hover-lift hover:ring-2 ring-brandRed">Политика обработки данных</a>
+      </div>
+    </section>
+
+    <!-- КОНТАКТЫ -->
+    <section id="contact" class="card p-6 md:p-10 reveal">
+      <div class="grid lg:grid-cols-2 gap-10">
+        <div>
+          <h2 class="text-2xl font-bold">Связаться и получить предложение</h2>
+          <p class="mt-2 text-slate-600">
+            Тел.: <span id="telPlaceholder" class="font-semibold"><a href="tel:+79918623459" class="text-brandRed">+7 (991) 862 3459</a></span><br>
+            WhatsApp: <a id="waLink" href="https://wa.me/79918623459" class="text-brandRed font-semibold">написать</a><br>
+            E-mail: <a id="mailLink" href="mailto:ilyarepnin@gmail.com" class="text-brandRed font-semibold">ilyarepnin@gmail.com</a>
+          </p>
+          <p class="mt-1 text-slate-600">Адрес: <span id="addrBlock">М.О.  г. Щёлково, ул. Заречная , стр.139</span>. Часы: <span id="hours">пн-вс 6:00–21:00</span>.</p>
+          <button id="openModalContact" class="mt-4 hover-lift bg-brandRed text-white px-4 py-3 rounded-xl font-semibold">Открыть мини-форму</button>
+        </div>
+        <div class="text-sm text-slate-600">
+          <p>Или отправьте письмо: <a id="mailLink2" href="mailto:ilyarepnin@gmail.com" class="text-brandRed font-semibold">ilyarepnin@gmail.com</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap py-8 text-sm text-slate-700">
+    <div class="card p-5">
+      <p>© <span id="year"></span> Дан - Техник. Все права защищены.</p>
+      <div class="mt-2 flex flex-wrap gap-4">
+        <a href="/policy" class="hover:text-brandRed">Политика</a>
+        <a href="/cookies" class="hover:text-brandRed">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- МОДАЛЬНАЯ МИНИ-ФОРМА -->
+  <div id="leadModal" class="modal-hidden fixed inset-0 z-[60] place-items-center p-4">
+    <div class="modal-backdrop absolute inset-0"></div>
+    <div role="dialog" aria-modal="true" aria-labelledby="leadTitle"
+         class="relative bg-white card max-w-lg w-full p-6 mx-auto">
+      <button id="closeModal" class="absolute right-3 top-3 text-slate-500 hover:text-brandRed" aria-label="Закрыть">✕</button>
+      <h3 id="leadTitle" class="text-xl font-semibold">Получить прайс и паспорт качества</h3>
+      <form id="leadForm" class="mt-4 grid grid-cols-1 gap-4">
+        <label class="text-sm">Имя*<input required name="name" class="mt-1 w-full border rounded-lg px-3 py-2 focus-ring" /></label>
+        <label class="text-sm">Телефон*<input required name="phone" type="tel" placeholder="" class="mt-1 w-full border rounded-lg px-3 py-2 focus-ring"/></label>
+        <label class="text-sm">Фракция
+          <select name="fraction" class="mt-1 w-full border rounded-lg px-3 py-2 focus-ring">
+            <option>0–5 мм</option><option>5–20 мм</option><option>20–40 мм</option><option>40–70 мм</option>
+          </select>
+        </label>
+        <label class="text-sm">Объём, т
+          <input name="tons" type="number" min="1" step="0.1" placeholder="20" class="mt-1 w-full border rounded-lg px-3 py-2 focus-ring"/>
+        </label>
+        <label class="text-sm">Комментарий
+          <textarea name="comment" rows="3" placeholder="Адрес, желаемая дата, требования..." class="mt-1 w-full border rounded-lg px-3 py-2 focus-ring"></textarea>
+        </label>
+        <button class="hover-lift bg-brandRed text-white px-4 py-3 rounded-xl font-semibold">Отправить заявку</button>
+        <p class="text-xs text-slate-500">Нажимая, вы соглашаетесь с политикой обработки персональных данных.</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Липкие кнопки в углу -->
+  <div id="sticky-actions" class="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3">
+    <!-- Кнопки быстрых чатов (только десктоп) -->
+    <div class="hidden md:flex flex-col items-end gap-3">
+      <a href="https://wa.me/79918623459" target="_blank" class="hover-lift flex items-center justify-center w-12 h-12 bg-white card p-0 rounded-full shadow-lg" aria-label="Написать в WhatsApp">
+        <img src="https://i.ibb.co/k4g5Xf0/wats-transformed.png" alt="WhatsApp" class="w-6 h-6">
+      </a>
+      <a href="https://t.me/dan_technik" target="_blank" class="hover-lift flex items-center justify-center w-12 h-12 bg-white card p-0 rounded-full shadow-lg" aria-label="Написать в Telegram">
+        <img src="https://i.ibb.co/c3bQcFY/tg-transformed.png" alt="Telegram" class="w-6 h-6">
+      </a>
+    </div>
+    <!-- Липкая кнопка "Запросить прайс" (только мобильные) -->
+    <div id="sticky-cta-mobile" class="md:hidden">
+      <button id="openModalSticky" class="hover-lift bg-brandRed text-white px-4 py-3 rounded-xl font-semibold shadow-lg">
+        Запросить прайс
+      </button>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    // Год
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Появление секций при скролле
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Параллакс: двигаем ТОЛЬКО изображение внутри фиксированного контейнера
+    const bgImg = document.getElementById('bgImg');
+    function parallax(){
+      const y = window.scrollY * -0.05;
+      bgImg.style.transform = `translateY(${y}px) scale(1.12)`;
+    }
+    window.addEventListener('scroll', parallax, { passive: true });
+    parallax();
+
+    // Простая "аналитика"
+    window.dataLayer = window.dataLayer || [];
+    function track(event, data={}) { window.dataLayer.push({event, ...data}); }
+
+    // Модалка
+    const modal = document.getElementById('leadModal');
+    const openBtns = [ 'openModalHero', 'openModalTop', 'openModalTopSm', 'openModalContact', 'openModalSticky' ]
+      .map(id => document.getElementById(id)).filter(Boolean);
+    const closeBtn = document.getElementById('closeModal');
+    function openModal() { modal.classList.remove('modal-hidden'); setTimeout(() => modal.querySelector('input,select,textarea,button')?.focus(), 0); track('modal_open', { where: 'cta' }); }
+    function closeModal() { modal.classList.add('modal-hidden'); track('modal_close'); }
+    openBtns.forEach(btn => btn.addEventListener('click', openModal));
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal || e.target.classList.contains('modal-backdrop')) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('modal-hidden')) closeModal(); });
+
+    // Калькулятор (рубли, Москва и МО)
+    const base = { '0-5': 950, '5-20': 1200, '20-40': 1100, '40-70': 900 };
+    const zoneK = { 'MSK': 1.00, 'MO1': 1.08, 'MO2': 1.15, 'MO3': 1.25 };
+    document.getElementById('calcForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const f = document.getElementById('cFraction').value;
+      const t = Math.max(1, parseFloat(document.getElementById('cTons').value || '0'));
+      const z = document.getElementById('cZone').value;
+      let price = (base[f] || 0) * t * (zoneK[z] || 1);
+      if (t > 100) price *= 0.94; else if (t > 50) price *= 0.97;
+      const out = document.getElementById('calcOut');
+      out.textContent = isFinite(price) && price>0
+        ? new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 }).format(price)
+        : 'Укажите объём';
+      track('calc_run', { fraction:f, tons:t, zone:z, est:price });
+    });
+
+    // JSON-LD
+    const orgJson = {
+      "@context":"https://schema.org",
+      "@type":"Organization",
+      "name":"Дан - Техник",
+      "url":window.location.origin,
+      "logo":window.location.origin + "/logo.svg",
+      "address":{"@type":"PostalAddress","addressLocality":"Щёлково","addressCountry":"RU","streetAddress":"М.О.  г. Щёлково, ул. Заречная , стр.139"}
+    };
+    const ld = document.createElement('script');
+    ld.type = 'application/ld+json';
+    ld.textContent = JSON.stringify(orgJson);
+    document.body.appendChild(ld);
+
+    // Мобильное меню
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    mobileMenuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      if (!mobileMenu.classList.contains('hidden')) {
+        track('mobile_menu_open');
+      } else {
+        track('mobile_menu_close');
+      }
+    });
+
+    // Закрытие мобильного меню при клике на ссылку
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // Интерактивная карта доставки
+    ymaps.ready(initMap);
+
+    function initMap() {
+      const warehouseCoords = [55.916667, 37.983333]; // Координаты Щёлково
+      const map = new ymaps.Map('map', {
+        center: warehouseCoords,
+        zoom: 10,
+        controls: ['zoomControl', 'fullscreenControl'],
+        behaviors: ['default', 'scrollZoom'] // Включаем по умолчанию, чтобы потом отключить
+      });
+      map.behaviors.disable('scrollZoom'); // Отключаем масштабирование колесиком мыши
+
+      const warehousePlacemark = new ymaps.Placemark(warehouseCoords, {
+        balloonContent: 'Склад Дан - Техник'
+      }, {
+        preset: 'islands#redDotIcon'
+      });
+      map.geoObjects.add(warehousePlacemark);
+
+      const deliveryZoneSlider = document.getElementById('deliveryZoneSlider');
+      const deliveryZoneValue = document.getElementById('deliveryZoneValue');
+      const deliveryCost = document.getElementById('deliveryCost');
+      const deliveryTime = document.getElementById('deliveryTime');
+      const cFraction = document.getElementById('cFraction');
+      const deliveryTonsSlider = document.getElementById('deliveryTonsSlider');
+      const deliveryTonsValue = document.getElementById('deliveryTonsValue');
+
+      const deliveryZones = [
+        { name: 'Зона 1 (до 30 км)', minDistance: 0, maxDistance: 30, color: '#A5D6A7', zoneKKey: 'MO1' }, // Light Green
+        { name: 'Зона 2 (30-60 км)', minDistance: 30, maxDistance: 60, color: '#FFF59D', zoneKKey: 'MO2' }, // Light Yellow
+        { name: 'Зона 3 (60-90 км)', minDistance: 60, maxDistance: 90, color: '#FFB74D', zoneKKey: 'MO3' }, // Orange
+      ];
+
+      // Массив для хранения объектов полигонов на карте
+      const mapPolygons = [];
+
+      // Добавляем стили для ползунка слайдера
+      const style = document.createElement('style');
+      style.id = 'deliveryZoneSliderStyle';
+      document.head.appendChild(style);
+
+      // Вспомогательная функция для генерации координат круга
+      function getCircleCoordinates(center, radius, points = 60) {
+        const coords = [];
+        for (let i = 0; i < points; i++) {
+          const angle = (i / points) * 2 * Math.PI;
+          const lat = center[0] + (radius / 111300) * Math.cos(angle); // Приближенно 1 градус широты = 111.3 км
+          const lon = center[1] + (radius / (111300 * Math.cos(center[0] * Math.PI / 180))) * Math.sin(angle);
+          coords.push([lat, lon]);
+        }
+        return coords;
+      }
+
+      // Добавляем полигоны-кольца на карту (выполняется один раз при инициализации карты)
+      deliveryZones.forEach((zone, index) => {
+        const outerRing = getCircleCoordinates(warehouseCoords, zone.maxDistance * 1000);
+        let innerRing = [];
+        if (zone.minDistance > 0) {
+          innerRing = getCircleCoordinates(warehouseCoords, zone.minDistance * 1000).reverse(); // Обратный порядок для внутреннего контура
+        }
+
+        const polygon = new ymaps.Polygon([outerRing, innerRing].filter(r => r.length > 0), {
+          balloonContent: zone.name
+        }, {
+          fillColor: zone.color + '4D', // Прозрачность 30%
+          strokeColor: zone.color,
+          strokeOpacity: 0.8,
+          strokeWidth: 2
+        });
+        map.geoObjects.add(polygon);
+        mapPolygons.push(polygon); // Сохраняем ссылку на полигон
+      });
+
+      function updateDeliveryInfo() {
+        const zoneIndex = parseInt(deliveryZoneSlider.value);
+        const currentZone = deliveryZones[zoneIndex];
+
+        deliveryZoneValue.textContent = currentZone.name;
+        
+        // Обновляем цвет слайдера
+        style.textContent = `
+          #deliveryZoneSlider::-webkit-slider-thumb { background: ${currentZone.color}; }
+          #deliveryZoneSlider::-moz-range-thumb { background: ${currentZone.color}; }
+          #deliveryZoneSlider::-ms-thumb { background: ${currentZone.color}; }
+        `;
+
+        // Динамическое изменение прозрачности зон на карте
+        mapPolygons.forEach((polygon, index) => {
+          if (index === zoneIndex) {
+            polygon.options.set('fillColor', currentZone.color + '80'); // Прозрачность 50% для активной зоны
+          } else {
+            polygon.options.set('fillColor', deliveryZones[index].color + '4D'); // Прозрачность 30% для неактивных зон
+          }
+        });
+
+        const tons = parseInt(deliveryTonsSlider.value);
+        deliveryTonsValue.textContent = `${tons} т`;
+
+        // Расчет стоимости доставки
+        const selectedFraction = cFraction.value;
+        const basePricePerTon = base[selectedFraction] || 0;
+        const zoneMultiplier = zoneK[currentZone.zoneKKey] || 1;
+
+        let cost = basePricePerTon * tons * zoneMultiplier;
+
+        // Применяем скидки за объем из калькулятора
+        if (tons > 100) cost *= 0.94; else if (tons > 50) cost *= 0.97;
+
+        deliveryCost.textContent = isFinite(cost) && cost > 0
+          ? new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 }).format(cost)
+          : 'Укажите объём';
+
+        // Расчет времени доставки (простая эвристика на основе максимального расстояния зоны)
+        const time = Math.ceil(currentZone.maxDistance / 30) + 1;
+        deliveryTime.textContent = `${time} ч`;
+      }
+
+      deliveryZoneSlider.addEventListener('input', updateDeliveryInfo);
+      deliveryTonsSlider.addEventListener('input', updateDeliveryInfo);
+      cFraction.addEventListener('change', updateDeliveryInfo);
+
+      updateDeliveryInfo();
+    }
+  </script>
+</body>
+</html>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    section { scroll-margin-top: 90px; }
+
+    /* Белые плашки */
+    .card { background:rgba(255,255,255,0.5); box-shadow: 0 10px 25px rgba(2,6,23,.08); border-radius: 1rem; }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+    .focus-ring:focus { outline: 3px solid #dc2626; outline-offset: 2px }
+
+    /* Параллакс-фон — двигаем ТОЛЬКО картинку, контейнер фиксированный */
+    #bgParallax { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background:#f5f5f5; }
+    #bgParallax picture { display:block; width:100%; height:100%; }
+    #bgParallax img {
+      width:100%; height:140vh; object-fit:cover;
+      filter: blur(7px) saturate(.9) brightness(.9);
+      transform: translateY(0) scale(1.12);
+      will-change: transform;
+    }
+
+    /* Hover: scale + красная тень */
+    .hover-lift {
+      transform: translateY(0) scale(1);
+      transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+      will-change: transform, box-shadow;
+    }
+    .hover-lift:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow:
+        0 16px 36px rgba(220, 38, 38, .22),
+        0 0 0 1px rgba(220, 38, 38, .35);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hover-lift, .hover-lift:hover {
+        transition: none !important;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+    }
+
+    /* Появление секций при скролле */
+    .reveal { opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .5s ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+
+    /* Модалка */
+    .modal-hidden { display: none; }
+    .modal-backdrop { background: rgba(0,0,0,.45); }
+  
+
+</style>
+</head>
+<body class="text-ink">
+  <!-- Фон: размытая фотография щебня (адаптивный <picture>) + параллакс -->
+  <div id="bgParallax" aria-hidden="true">
+    <!-- Положи эти файлы в /img: gravel@768.webp, gravel@1280.webp, gravel@1920.webp -->
+    <picture id="bgPicture">
+      <source media="(min-width: 1280px)" srcset="img/gravel@1920.webp.jpg">
+      <source media="(min-width: 768px)"  srcset="img/gravel@1280.webp.jpg">
+      <img id="bgImg" src="img/gravel@768.webp.jpg" alt="Фон: щебень">
+    </picture>
+  </div>
+
+  <a href="#contact" class="sr-only focus:not-sr-only focus-ring absolute m-2 px-3 py-1 bg-white rounded">К контактам</a>
+
+  <!-- ШАПКА -->
+  <header class="sticky top-0 z-50 bg-white/30 backdrop-blur">
+    <div class="wrap py-3 flex items-center gap-6">
+      <!-- Логотип и название компании удалены -->
+      <nav class="ml-auto hidden md:flex items-center gap-6 text-sm">
+        <a href="#products" class="hover:text-brandRed">Ассортимент</a>
+        <a href="#calc" class="hover:text-brandRed">Калькулятор</a>
+        <a href="#logistics" class="hover:text-brandRed">Доставка</a>
+        <a href="#docs" class="hover:text-brandRed">Документы</a>
+        <button id="openModalTop" class="hover-lift bg-brandRed text-white px-3 py-2 rounded-lg">Запросить прайс</button>
+      </nav>
+      <!-- Мобильное меню -->
+      <div class="md:hidden ml-auto flex items-center gap-3">
+        <button id="openModalTopSm" class="hover-lift bg-brandRed text-white px-3 py-2 rounded-lg">Прайс</button>
+        <button id="mobileMenuToggle" class="p-2 rounded-lg text-ink hover:bg-fog focus-ring" aria-label="Открыть меню">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Выпадающее мобильное меню -->
+  <div id="mobileMenu" class="hidden md:hidden bg-white/90 backdrop-blur border-b">
+    <nav class="wrap py-3 flex flex-col gap-2 text-sm">
+      <a href="#products" class="block px-3 py-2 hover:bg-fog rounded-lg">Ассортимент</a>
+      <a href="#calc" class="block px-3 py-2 hover:bg-fog rounded-lg">Калькулятор</a>
+      <a href="#logistics" class="block px-3 py-2 hover:bg-fog rounded-lg">Доставка</a>
+      <a href="#docs" class="block px-3 py-2 hover:bg-fog rounded-lg">Документы</a>
+    </nav>
+  </div>
+
+  <main class="wrap space-y-10 md:space-y-12 py-8">
+    <!-- ГЕРОЙ: половина экрана, центрированный -->
+    <section class="card p-6 md:p-10 reveal min-h-[50vh] flex items-center">
+      <div class="w-full text-center">
+        <h1 class="text-brandRed font-extrabold leading-[0.95] text-5xl md:text-7xl lg:text-8xl">
+          Дан - Техник
+        </h1>
+        <p class="text-brandYellow font-semibold mt-4 text-2xl md:text-3xl lg:text-4xl">
+         вторичный щебень в Москве и МО
+        </p>
+        <div class="mt-10">
+          <button id="openModalHero" class="hover-lift bg-brandRed text-white px-6 py-4 rounded-xl text-base font-semibold shadow">
+            Запросить прайс
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- КЛЮЧЕВЫЕ ПРЕИМУЩЕСТВА тест снова и снова-->
+    <section class="card p-6 md:p-10 reveal">
+      <ul class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+        <li class="card p-4 hover-lift"><span class="block font-semibold">Предсказуемые сроки отгрузки и свой транспорт</span></li>
+        <li class="card p-4 hover-lift"><span class="block font-semibold">Собственная переработка и контроль качества</span></li>
+        <li class="card p-4 hover-lift"><span class="block font-semibold">Более 10 лет на рынке рецикла-бетона</span></li>
+      </ul>
+    </section>
+
+    <!-- АССОРТИМЕНТ -->
+    <section id="products" class="card p-6 md:p-10 reveal">
+      <h2 class="text-2xl md:text-3xl font-bold">Ассортимент и характеристики</h2>
+      <p class="mt-2 text-slate-600">Ориентировочные параметры. Точные данные — в паспорте партии.</p>
+
+      <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <article id="fraction-card-0-5" class="card p-5 hover-lift">
+
+          <img src="img/Фракция 0-5 мм.jpeg" alt="Фракция 0-5 мм" class="mb-4 rounded-lg w-full h-32 object-cover" />
+          <h3 class="font-semibold">0–5 мм</h3>
+          <p class="text-sm text-slate-600 mt-1">Отсев/песок вторичный. Подготовка оснований, выравнивающие слои.</p>
+          <dl class="mt-3 text-sm">
+            <div class="flex justify-between"><dt>Плотность</dt><dd>≈1,4–1,6 т/м³</dd></div>
+            <div class="flex justify-between"><dt>Поставка</dt><dd>навал / биг-бэг</dd></div>
+          </dl>
+        </article>
+
+        <article class="card p-5 hover-lift">
+          <img src="img/Фракция 5-20 мм.jpeg" alt="Фракция 5-20 мм" class="mb-4 rounded-lg w-full h-32 object-cover" />
+          <h3 class="font-semibold">5–20 мм</h3>
+          <p class="text-sm text-slate-600 mt-1">Благоустройство, временные дороги, дренажи.</p>
+          <dl class="mt-3 text-sm">
+            <div class="flex justify-between"><dt>Плотность</dt><dd>≈1,4–1,6 т/м³</dd></div>
+            <div class="flex justify-between"><dt>Поставка</dt><dd>навал / биг-бэг</dd></div>
+          </dl>
+        </article>
+
+        <article class="card p-5 hover-lift">
+          <img src="img/Фракция 20-40 мм.jpeg" alt="Фракция 20-40 мм" class="mb-4 rounded-lg w-full h-32 object-cover" />
+          <h3 class="font-semibold">20–40 мм</h3>
+          <p class="text-sm text-slate-600 mt-1">Основания под площадки, засыпка траншей.</p>
+          <dl class="mt-3 text-sm">
+            <div class="flex justify-between"><dt>Плотность</dt><dd>≈1,3–1,5 т/м³</dd></div>
+            <div class="flex justify-between"><dt>Поставка</dt><dd>навал / биг-бэг</dd></div>
+          </dl>
+        </article>
+
+        <article class="card p-5 hover-lift">
+          <img src="img/Фракция 40-70 мм.jpeg" alt="Фракция 40-70 мм" class="mb-4 rounded-lg w-full h-32 object-cover" />
           <h3 class="font-semibold">40–70 мм</h3>
           <p class="text-sm text-slate-600 mt-1">Крупные подушки, технологические площадки.</p>
           <dl class="mt-3 text-sm">
